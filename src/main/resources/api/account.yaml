@@ -26,7 +26,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: '#/components/schemas/Transactions'
   /accounts/{accountNumber}/balance:
     get:
       summary: Get a balance by account number
@@ -111,9 +111,18 @@ components:
         detail1:
           type: string
           example: "Posílám peníze"
+        detail2:
+          type: string
+          example: "Posílám peníze"
+        detail3:
+          type: string
+          example: "Posílám peníze"
+        detail4:
+          type: string
+          example: "Posílám peníze"
       required:
         - detail1
-    Transaction:
+    Transactions:
       type: object
       properties:
         amount:

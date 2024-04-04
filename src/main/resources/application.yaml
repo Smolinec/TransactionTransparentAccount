@@ -1,2 +1,3 @@
-spring.application.name=TransactionTransparentAccount
-
+spring:
+  application:
+    name: TransactionTransparentAccount

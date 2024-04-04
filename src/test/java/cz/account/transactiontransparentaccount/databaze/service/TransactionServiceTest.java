@@ -7,10 +7,12 @@ import cz.account.web.model.Transactions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,13 +49,13 @@ public class TransactionServiceTest {
 
     private Transaction getTransaction() {
         var transaction = new Transaction();
-        transaction.setAmount(50.0);
+        transaction.setAmount(new BigDecimal("50.0"));
         transaction.setCurrency("USD");
         transaction.setId("1");
         transaction.setBankref("bankref");
         transaction.setTransactionId("transactionId");
-        transaction.setBookingDate(Instant.now());
-        transaction.setPostingDate(Instant.now());
+        transaction.setBookingDate(new Date());
+        transaction.setPostingDate(new Date());
         transaction.setCreditDebitIndicator("CRDT");
         transaction.setOwnAccountNumber("12345");
         transaction.setDetail1("detail1");
