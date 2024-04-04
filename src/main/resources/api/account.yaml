@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+    description: 'local'
+paths:
+  /accounts/{accountNumber}/transactions:
+    get:
+      summary: Get a transaction by account number
+      operationId: getTransaction
+      parameters:
+          - in: path
+            name: accountNumber
+            schema:
+              type: integer
+            required: true
+            description: Transaction of the account number to get
+      responses:
+        '200':
+          description: A Transaction object
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+  /accounts/{accountNumber}/balance:
+    get:
+      summary: Get a balance by account number
+      operationId: getBalance
+      parameters:
+        - in: path
+          name: accountNumber
+          schema:
+            type: integer
+          required: true
+          description: Balance of the account number to get
+      responses:
+        '200':
+          description: A Balance object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+  /accounts:
+    get:
+      summary: Get a user accounts
+      operationId: getAccounts
+      responses:
+        '200':
+          description: A Accounts object
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Amount:
+      type: object
+      properties:
+        currency:
+          type: string
+          example: "CZK"
+        value:
+          type: number
+          format: float
+          example: 33445566.22
+      required:
+        - currency
+        - value
+    Balance:
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        date:
+          type: string
+          format: date-time
+          example: "2022-10-18T18:47:13.614+02:00"
+        type:
+          type: string
+          example: "2"
+      required:
+        - amount
+        - date
+        - type
+    CounterPartyAccount:
+      type: object
+      properties:
+        accountName:
+          type: string
+          example: "PPF BANKA A.S."
+        accountNumber:
+          type: string
+          example: "0000009504010019"
+        bankCode:
+          type: string
+          example: "6000"
+      required:
+        - accountName
+        - accountNumber
+        - bankCode
+    Details:
+      type: object
+      properties:
+        detail1:
+          type: string
+          example: "Posílám peníze"
+      required:
+        - detail1
+    Transaction:
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        bankref:
+          type: string
+          example: "PS221019SO314822"
+        bookingDate:
+          type: string
+          format: date
+          example: "2022-10-19"
+        counterPartyAccount:
+          $ref: '#/components/schemas/CounterPartyAccount'
+        creditDebitIndicator:
+          type: string
+          example: "CRDT"
+        details:
+          $ref: '#/components/schemas/Details'
+        id:
+          type: string
+          example: "20221019:0000000219"
+        ownAccountNumber:
+          type: string
+          example: "2002222222"
+        postingDate:
+          type: string
+          format: date
+          example: "2022-10-19"
+        productBankRef:
+          type: string
+          example: "PS221019SO314822"
+        specificSymbol:
+          type: string
+          example: "12"
+        statementNumber:
+          type: string
+          example: "196"
+        statementPeriod:
+          type: string
+          example: "2022"
+        transactionId:
+          type: string
+          example: "4831716"
+        transactionType:
+          type: string
+          example: "DPO"
+        transactionTypeCode:
+          type: integer
+          example: 1012209
+        variableSymbol:
+          type: string
+          example: "12"
+      required:
+        - amount
+        - bankref
+        - bookingDate
+        - counterPartyAccount
+        - creditDebitIndicator
+        - details
+        - id
+        - ownAccountNumber
+        - postingDate
+        - productBankRef
+        - specificSymbol
+        - statementNumber
+        - statementPeriod
+        - transactionId
+        - transactionType
+        - transactionTypeCode
+        - variableSymbol
+    Identification:
+      type: object
+      properties:
+        iban:
+          type: string
+          example: "CZ3560000000002002222222"
+        otherAccountNumber:
+          type: string
+          example: "000000 2002222222"
+      required:
+        - iban
+        - otherAccountNumber
+    Servicer:
+      type: object
+      properties:
+        bankCode:
+          type: string
+          example: "6000"
+        bic:
+          type: string
+          example: "PMBPCZPP"
+        countryCode:
+          type: string
+          example: "CZ"
+      required:
+        - bankCode
+        - bic
+        - countryCode
+    Account:
+      type: object
+      properties:
+        currency:
+          type: string
+          example: "CZK"
+        id:
+          type: string
+          example: "101010101010"
+        identification:
+          $ref: '#/components/schemas/Identification'
+        name:
+          type: string
+          example: "Transparent 1"
+        product:
+          type: string
+          example: "-1"
+        servicer:
+          $ref: '#/components/schemas/Servicer'
+      required:
+        - currency
+        - id
+        - identification
+        - name
+        - product
+        - servicer
